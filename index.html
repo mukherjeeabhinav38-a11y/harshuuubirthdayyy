@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Harshada!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f8ff, #ffe4e1);
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            animation: fadeIn 1s ease-in;
+        }
+        h1 {
+            color: #ff69b4;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: bounceIn 1.5s ease-out;
+        }
+        .message {
+            font-size: 1.2em;
+            margin: 20px auto;
+            max-width: 600px;
+            line-height: 1.6;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: slideUp 2s ease-in;
+        }
+        .slideshow {
+            position: relative;
+            max-width: 600px;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: zoomIn 2.5s ease-in;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .slide:hover {
+            transform: scale(1.05);
+        }
+        .active {
+            display: block;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: #ddd;
+            position: absolute;
+            bottom: 0;
+        }
+        .progress {
+            height: 100%;
+            background: #ff69b4;
+            width: 0%;
+            transition: width 3s linear;
+        }
+        .notes {
+            margin-top: 30px;
+            font-style: italic;
+            animation: fadeIn 3s ease-in;
+        }
+        button {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        .surprise-btn {
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+        }
+        .form-section {
+            margin: 30px auto;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .wishes-list {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .wish {
+            background: #f9f9f9;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 5px solid #ff69b4;
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease-in;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            cursor: zoom-out;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 24px;
+            animation: float 6s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+    </style>
+</head>
+<body onload="startConfetti(); createHearts();">
+    <h1>Happy Birthday, Harshada! 🎉</h1>
+    <div class="message">
+        Hey Harshada, it's your special day! I know things have been tough lately, but remember, you're stronger than you think. You've got this amazing spirit that lights up everyone's world. Here's to new beginnings, laughter, and all the good things coming your way. I cherish our friendship and hope these memories bring a smile to your face.
+    </div>
+    
+    <div class="slideshow">
+        <img class="slide active" src="C:\Users\Lenovo\OneDrive\Pictures\harshada 1.png" alt="Memory 1" onclick="openModal(this.src)">
+        <img class="slide" src="C:\Users\Lenovo\OneDrive\Pictures\harshada 2.png" alt="Memory 2" onclick="openModal(this.src)">
+        <img class="slide" src="C:\Users\Lenovo\OneDrive\Pictures\harshada 3.png" alt="Memory 3" onclick="openModal(this.src)">
+        <img class="slide" src="C:\Users\Lenovo\OneDrive\Pictures\harshada 4.png" alt="Memory 4" onclick="openModal(this.src)">
+        <img class="slide" src="C:\Users\Lenovo\OneDrive\Pictures\harshada 5.png" alt="Memory 5" onclick="openModal(this.src)">
+        <div class="progress-bar"><div class="progress" id="progress"></div></div>
+    </div>
+    
+    <button onclick="prevSlide()">Previous</button>
+    <button onclick="nextSlide()">Next</button>
+    <button class="surprise-btn" onclick="showSurprise()">Click for a Surprise!</button>
+    
+    <div class="form-section">
+        <h3>Leave a Birthday Wish!</h3>
+        <input type="text" id="name" placeholder="Your Name">
+        <textarea id="wish" placeholder="Write your wish here..."></textarea>
+        <button onclick="addWish()">Submit Wish</button>
+        <div class="wishes-list" id="wishesList"></div>
+    </div>
+    
+    <div class="notes">
+        <p>Some quick reminders: You're loved, you're capable, and brighter days are ahead. If you need to talk, I'm here. Enjoy your day! ❤️</p>
+    </div>
+    
+    <!-- Modal for full-screen image view -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImg" onclick="closeModal()">
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const modal = document.getElementById('myModal');
+        const modalImg = document.getElementById('modalImg');
+        const progress = document.getElementById('progress');
+        const wishesList = document.getElementById('wishesList');
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            progress.style.width = '0%';
+            setTimeout(() => progress.style.width = '100%', 10);
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        function openModal(src) {
+            modal.style.display = 'block';
+            modalImg.src = src;
+        }
+        
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+        
+        function startConfetti() {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        }
+        
+        function createHearts() {
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 6 + 's';
+                document.body.appendChild(heart);
+            }
+        }
+        
+        function showSurprise() {
+            alert("Surprise! You're amazing, Harshada! 🌟 Keep shining!");
+            confetti({ particleCount: 50, spread: 60 });
+        }
+        
+        function addWish() {
+            const name = document.getElementById('name').value;
+            const wish = document.getElementById('wish').value;
+            if (name && wish) {
+                const wishDiv = document.createElement('div');
+                wishDiv.className = 'wish';
+                wishDiv.innerHTML = `<strong>${name}:</strong> ${wish}`;
+                wishesList.appendChild(wishDiv);
+                localStorage.setItem('wishes', wishesList.innerHTML);
+                document.getElementById('name').value = '';
+                document.getElementById('wish').value = '';
+            }
+        }
+        
+        // Load saved wishes on page load
+        window.onload = function() {
+            const savedWishes = localStorage.getItem('wishes');
+            if (savedWishes) wishesList.innerHTML = savedWishes;
+            startConfetti();
+            createHearts();
+        };
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target === modal) closeModal();
+        };
+        
+        // Auto-play slideshow
+        setInterval(nextSlide, 3000);
+    </script>
+</body>
+</html>
